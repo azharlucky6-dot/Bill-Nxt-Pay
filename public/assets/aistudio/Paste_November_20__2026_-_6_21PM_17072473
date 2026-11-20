@@ -1,0 +1,736 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NXT Pay — Credit Card, Utility &amp; Business Bill Hub</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #EEF1F6;
+      color: #111827;
+    }
+    .card-metal {
+      background: linear-gradient(135deg, #1E2024 0%, #0D0E11 55%, #1A1D24 100%);
+      box-shadow: 0 18px 34px -12px rgba(15, 23, 42, 0.45);
+    }
+    .card-metal-blue {
+      background: linear-gradient(135deg, #102542 0%, #0A1526 60%, #16325B 100%);
+      box-shadow: 0 18px 34px -12px rgba(16, 37, 66, 0.45);
+    }
+    .card-metal-emerald {
+      background: linear-gradient(135deg, #112A24 0%, #091714 60%, #173B32 100%);
+      box-shadow: 0 18px 34px -12px rgba(17, 42, 36, 0.45);
+    }
+    .app-shell {
+      max-width: 430px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #FBF8FC 0%, #F4F5F9 45%, #F7F7FA 100%);
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <div class="app-shell mx-auto relative pb-28 shadow-2xl border-x border-slate-200/70">
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between px-5 pt-4 pb-2">
+      <button id="btnSecurityDrawer" type="button" class="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition" title="Security &amp; Terms">
+        <i data-lucide="shield-check" class="w-4 h-4 text-indigo-700"></i>
+      </button>
+      <div class="text-xs font-semibold tracking-wide text-slate-500 uppercase">NXT Pay</div>
+      <button id="btnTopWallet" type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold hover:bg-amber-100 transition">
+        <i data-lucide="coins" class="w-3.5 h-3.5 text-amber-600"></i>
+        <span id="topCashVal">₹500</span>
+      </button>
+    </header>
+
+    <!-- Main Dynamic View Container -->
+    <main id="mainView" class="px-4 pt-2 space-y-4">
+      <!-- HOME VIEW -->
+      <section id="viewHome" class="space-y-4">
+        <!-- Credit Card Carousel -->
+        <div>
+          <div id="cardCarousel" class="relative overflow-hidden rounded-2xl">
+            <div id="cardTrack" class="flex transition-transform duration-300 ease-out">
+              <!-- Cards injected by JS -->
+            </div>
+          </div>
+          <div id="cardDots" class="flex items-center justify-center gap-1.5 mt-2.5"></div>
+        </div>
+
+        <!-- Get Your NXT Credit Card Banner -->
+        <button id="btnCardMarketplace" type="button" class="w-full text-left bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-sm flex items-center justify-between hover:border-indigo-300 transition">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0">
+              <i data-lucide="credit-card" class="w-5 h-5 text-amber-600"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-900">Get your NXT Credit Card</div>
+              <div class="text-xs text-slate-500">Choose from 100+ card options</div>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+
+        <!-- Payment & Utility Grid -->
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+          <div class="grid grid-cols-4 gap-y-5 gap-x-2 text-center">
+            <button type="button" data-action="business" class="grid-action group flex flex-col items-center gap-1.5">
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-indigo-50 flex items-center justify-center transition">
+                <i data-lucide="landmark" class="w-5 h-5 text-slate-700 group-hover:text-indigo-700"></i>
+              </div>
+              <span class="text-[11px] font-medium text-slate-700 leading-tight">Business<br/>payment</span>
+            </button>
+
+            <button type="button" data-action="gst" class="grid-action group relative flex flex-col items-center gap-1.5">
+              <span class="absolute -top-2 px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[9px] font-bold border border-amber-200 whitespace-nowrap">Soon Coming</span>
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-amber-50 flex items-center justify-center transition">
+                <i data-lucide="receipt" class="w-5 h-5 text-slate-700"></i>
+              </div>
+              <span class="text-[11px] font-medium text-slate-700 leading-tight">GST</span>
+            </button>
+
+            <button type="button" data-action="utilities" class="grid-action group flex flex-col items-center gap-1.5">
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-indigo-50 flex items-center justify-center transition">
+                <i data-lucide="zap" class="w-5 h-5 text-slate-700 group-hover:text-indigo-700"></i>
+              </div>
+              <span class="text-[11px] font-medium text-slate-700 leading-tight">Utilities</span>
+            </button>
+
+            <button type="button" data-action="invoice" class="grid-action group flex flex-col items-center gap-1.5">
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-indigo-50 flex items-center justify-center transition">
+                <i data-lucide="file-text" class="w-5 h-5 text-slate-700 group-hover:text-indigo-700"></i>
+              </div>
+              <span class="text-[11px] font-medium text-slate-700 leading-tight">Pay Invoice</span>
+            </button>
+
+            <button type="button" data-action="wallet" class="grid-action group flex flex-col items-center gap-1.5">
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-indigo-50 flex items-center justify-center transition">
+                <i data-lucide="wallet" class="w-5 h-5 text-slate-700 group-hover:text-indigo-700"></i>
+              </div>
+              <span class="text-[11px] font-medium text-slate-700 leading-tight">Wallet</span>
+            </button>
+
+            <button type="button" data-action="seller" class="grid-action group relative flex flex-col items-center gap-1.5">
+              <span class="absolute -top-2 px-2 py-0.5 rounded-full bg-indigo-700 text-white text-[9px] font-bold">New</span>
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-indigo-50 flex items-center justify-center transition">
+                <i data-lucide="store" class="w-5 h-5 text-slate-700 group-hover:text-indigo-700"></i>
+              </div>
+              <span class="text-[11px] font-medium text-slate-700 leading-tight">Seller Hub</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Activate Wallet CTA -->
+        <button id="btnActivateWallet" type="button" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 text-emerald-900 text-xs font-semibold flex items-center justify-center gap-2 hover:from-emerald-100 hover:to-teal-100 transition">
+          <i data-lucide="shield" class="w-4 h-4 text-emerald-700"></i>
+          <span id="walletCtaText">Activate your Wallet NXT &rarr;</span>
+        </button>
+
+        <!-- Growth Cards Row -->
+        <div class="grid grid-cols-2 gap-3">
+          <button id="btnReferEarn" type="button" class="text-left rounded-2xl p-3.5 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/70 hover:border-amber-300 transition">
+            <div class="text-sm font-bold text-slate-900">Refer &amp; Earn</div>
+            <div class="text-xs text-slate-600 mt-0.5">Earn 500 NXT Cash</div>
+            <div class="mt-2 inline-flex items-center text-[11px] font-semibold text-amber-800">
+              Share code <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+            </div>
+          </button>
+
+          <button id="btnApplyCard" type="button" class="text-left rounded-2xl p-3.5 bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200/70 hover:border-rose-300 transition">
+            <div class="text-sm font-bold text-slate-900">Apply New Card</div>
+            <div class="text-xs text-slate-600 mt-0.5">100+ Cards &amp; 500 Cash</div>
+            <div class="mt-2 inline-flex items-center text-[11px] font-semibold text-rose-800">
+              Explore <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+            </div>
+          </button>
+        </div>
+
+        <!-- Upcoming Payments Preview -->
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-sm font-bold text-slate-900">Upcoming Payments</h2>
+            <button id="btnViewAllHistory" type="button" class="text-xs font-semibold text-indigo-700 hover:underline">View all</button>
+          </div>
+          <div id="upcomingList" class="space-y-2.5"></div>
+        </div>
+      </section>
+
+      <!-- LOAN VIEW -->
+      <section id="viewLoan" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+          <h2 class="text-base font-bold text-slate-900">Instant Credit &amp; Business Loans</h2>
+          <p class="text-xs text-slate-600">Pre-approved partner offers via RBI-registered NBFCs. Zero impact on credit score for eligibility check.</p>
+          <div class="space-y-2.5 pt-1">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-slate-900">Personal Flexi Loan</div>
+                <div class="text-xs text-slate-500">Up to ₹5,00,000 &bull; 11.9% p.a.</div>
+              </div>
+              <button type="button" data-loan="Personal Flexi Loan" class="btn-loan-apply px-3 py-1.5 rounded-lg bg-indigo-900 text-white text-xs font-semibold">Check</button>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-slate-900">Merchant Working Capital</div>
+                <div class="text-xs text-slate-500">Up to ₹15,00,000 &bull; Daily/Weekly EMI</div>
+              </div>
+              <button type="button" data-loan="Merchant Working Capital" class="btn-loan-apply px-3 py-1.5 rounded-lg bg-indigo-900 text-white text-xs font-semibold">Check</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARDS VIEW -->
+      <section id="viewCards" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-bold text-slate-900">Linked Credit Cards</h2>
+            <button id="btnAddNewCardModal" type="button" class="text-xs font-semibold text-indigo-700 hover:underline">+ Link Card</button>
+          </div>
+          <div id="cardsManageList" class="space-y-3"></div>
+        </div>
+      </section>
+
+      <!-- HISTORY VIEW -->
+      <section id="viewHistory" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+          <h2 class="text-base font-bold text-slate-900 mb-3">Transaction Ledger (BBPS)</h2>
+          <div id="historyList" class="space-y-2.5"></div>
+        </div>
+      </section>
+
+      <!-- SUPPORT VIEW -->
+      <section id="viewSupport" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+          <h2 class="text-base font-bold text-slate-900">Help, Security &amp; Grievance</h2>
+          <p class="text-xs text-slate-600">Failed BBPS or UPI payments are auto-reversed within T+1 to T+5 working days.</p>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
+            <div class="font-semibold text-slate-800">Grievance Officer (RBI / IT Rules)</div>
+            <div class="text-slate-600">Email: grievance@nxtpay-demo.in</div>
+            <div class="text-slate-600">SLA: 24h acknowledgement &bull; 30-day resolution</div>
+          </div>
+          <button id="btnOpenTermsFromSupport" type="button" class="w-full py-2.5 rounded-xl bg-indigo-900 text-white text-xs font-semibold">Read Terms &amp; Security Policy</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Floating Navigation Bar -->
+    <nav class="fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] bg-white/95 backdrop-blur-md border border-slate-200 rounded-full px-3 py-1.5 shadow-xl flex items-center justify-between z-30">
+      <button type="button" data-tab="loan" class="nav-tab flex flex-col items-center gap-0.5 px-2.5 py-1 text-slate-500 hover:text-indigo-900">
+        <i data-lucide="percent" class="w-4 h-4"></i>
+        <span class="text-[10px] font-medium">Loan</span>
+      </button>
+      <button type="button" data-tab="cards" class="nav-tab flex flex-col items-center gap-0.5 px-2.5 py-1 text-slate-500 hover:text-indigo-900">
+        <i data-lucide="credit-card" class="w-4 h-4"></i>
+        <span class="text-[10px] font-medium">Cards</span>
+      </button>
+
+      <button id="btnFloatingPayNow" type="button" class="-mt-6 w-14 h-14 rounded-full bg-[#13197D] text-white shadow-lg shadow-indigo-900/40 flex flex-col items-center justify-center hover:bg-indigo-900 active:scale-95 transition">
+        <span class="text-[11px] font-bold leading-tight">Pay now</span>
+      </button>
+
+      <button type="button" data-tab="history" class="nav-tab flex flex-col items-center gap-0.5 px-2.5 py-1 text-slate-500 hover:text-indigo-900">
+        <i data-lucide="receipt-text" class="w-4 h-4"></i>
+        <span class="text-[10px] font-medium">History</span>
+      </button>
+      <button type="button" data-tab="support" class="nav-tab flex flex-col items-center gap-0.5 px-2.5 py-1 text-slate-500 hover:text-indigo-900">
+        <i data-lucide="headphones" class="w-4 h-4"></i>
+        <span class="text-[10px] font-medium">Support</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- MODAL OVERLAY -->
+  <div id="modalOverlay" class="hidden fixed inset-0 bg-slate-900/55 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-3">
+    <div class="bg-white w-full max-w-[410px] rounded-2xl p-5 shadow-2xl border border-slate-200 max-h-[88vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 id="modalTitle" class="text-base font-bold text-slate-900">Action</h3>
+        <button id="btnCloseModal" type="button" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="modalBody" class="pt-4 space-y-3 text-sm text-slate-700"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toastBox" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-medium shadow-lg max-w-[380px] text-center"></div>
+
+  <script>
+    const state = {
+      activeTab: 'home',
+      activeCardIndex: 0,
+      walletActivated: false,
+      cashBalance: 500,
+      demoOtp: '482910',
+      cards: [
+        {
+          id: 'c1',
+          bank: 'ICICI BANK',
+          last4: '9000',
+          label: 'Amazon Pay',
+          network: 'VISA',
+          status: 'Overdue',
+          due: 739,
+          limit: 112629,
+          updated: '03-07-2026',
+          style: 'card-metal'
+        },
+        {
+          id: 'c2',
+          bank: 'HDFC BANK',
+          last4: '4821',
+          label: 'Millennia',
+          network: 'Mastercard',
+          status: 'Due in 4d',
+          due: 14280,
+          limit: 235720,
+          updated: '18-11-2026',
+          style: 'card-metal-blue'
+        },
+        {
+          id: 'c3',
+          bank: 'SBI CARD',
+          last4: '1194',
+          label: 'SimplyCLICK',
+          network: 'RuPay',
+          status: 'Paid',
+          due: 0,
+          limit: 85000,
+          updated: '19-11-2026',
+          style: 'card-metal-emerald'
+        }
+      ],
+      upcoming: [
+        { id: 'u1', title: 'TSSPDCL Electricity', sub: 'Consumer #10948271', amount: 1840, category: 'Electricity' },
+        { id: 'u2', title: 'Airtel Postpaid', sub: '+91 98480 11223', amount: 707, category: 'Postpaid' },
+        { id: 'u3', title: 'NHAI FASTag', sub: 'TS09 EF 4421', amount: 500, category: 'FASTag' }
+      ],
+      history: [
+        { id: 'BBPS992817', title: 'SBI Card ****1194', amount: 6420, date: '19 Nov 2026', status: 'Success' },
+        { id: 'BBPS992104', title: 'Jio Prepaid 5G', amount: 299, date: '14 Nov 2026', status: 'Success' }
+      ]
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function showToast(msg) {
+      const box = $('toastBox');
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => box.classList.add('hidden'), 3200);
+    }
+
+    function openModal(title, html) {
+      $('modalTitle').textContent = title;
+      $('modalBody').innerHTML = html;
+      $('modalOverlay').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      $('modalOverlay').classList.add('hidden');
+    }
+
+    function formatINR(num) {
+      return '₹' + Number(num).toLocaleString('en-IN');
+    }
+
+    function renderCards() {
+      const track = $('cardTrack');
+      const dots = $('cardDots');
+      track.innerHTML = state.cards.map((c, idx) => {
+        const badgeClass = c.status === 'Overdue'
+          ? 'bg-rose-500/20 text-rose-300 border-rose-400/40'
+          : c.status === 'Paid'
+            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+            : 'bg-amber-500/20 text-amber-200 border-amber-400/40';
+        const btnText = c.due > 0 ? 'Pay Bill' : 'Paid ✓';
+        return `
+          <div class="w-full shrink-0">
+            <div class="${c.style} rounded-2xl p-4 text-white">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="text-xs font-bold tracking-wide">${c.bank}</div>
+                  <div class="text-[11px] text-slate-300">•••• ${c.last4} | ${c.label}</div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${badgeClass}">${c.status}</span>
+              </div>
+
+              <div class="flex items-center justify-between mt-5">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-5 rounded bg-gradient-to-br from-amber-200 to-amber-500 opacity-90"></div>
+                  <span class="text-xs font-bold tracking-wider text-slate-200">${c.network}</span>
+                </div>
+                <div class="text-right">
+                  <div class="text-[11px] text-slate-300">Amount Due</div>
+                  <div class="text-lg font-extrabold">${formatINR(c.due)}</div>
+                </div>
+              </div>
+
+              <div class="flex items-end justify-between mt-4 pt-3 border-t border-white/10">
+                <div>
+                  <div class="text-[11px] text-slate-400">Available Limit</div>
+                  <div class="text-sm font-bold">${formatINR(c.limit)}</div>
+                  <div class="text-[10px] text-slate-400 mt-0.5">Last updated: ${c.updated}</div>
+                </div>
+                <button type="button" data-card-idx="${idx}" class="btn-pay-card px-4 py-1.5 rounded-full bg-white text-slate-900 text-xs font-bold hover:bg-slate-100 transition">${btnText}</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      track.style.transform = `translateX(-${state.activeCardIndex * 100}%)`;
+
+      dots.innerHTML = state.cards.map((_, idx) => `
+        <button type="button" data-dot-idx="${idx}" class="dot-btn h-1.5 rounded-full transition-all ${idx === state.activeCardIndex ? 'w-5 bg-indigo-900' : 'w-1.5 bg-slate-300'}"></button>
+      `).join('');
+
+      document.querySelectorAll('.dot-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeCardIndex = Number(btn.dataset.dotIdx);
+          renderCards();
+        });
+      });
+
+      document.querySelectorAll('.btn-pay-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const card = state.cards[Number(btn.dataset.cardIdx)];
+          if (card.due <= 0) {
+            showToast(`${card.bank} •••• ${card.last4} is already paid.`);
+            return;
+          }
+          launchPaymentGate(`${card.bank} •••• ${card.last4}`, card.due, () => {
+            card.limit += card.due;
+            card.due = 0;
+            card.status = 'Paid';
+            renderCards();
+          });
+        });
+      });
+    }
+
+    function renderUpcoming() {
+      $('upcomingList').innerHTML = state.upcoming.map(u => `
+        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/70">
+          <div>
+            <div class="text-xs font-bold text-slate-900">${u.title}</div>
+            <div class="text-[11px] text-slate-500">${u.sub}</div>
+          </div>
+          <button type="button" data-up-id="${u.id}" class="btn-pay-upcoming px-3 py-1 rounded-lg bg-indigo-900 text-white text-xs font-semibold hover:bg-indigo-800">${formatINR(u.amount)}</button>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.btn-pay-upcoming').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = state.upcoming.find(x => x.id === btn.dataset.upId);
+          if (!item) return;
+          launchPaymentGate(item.title, item.amount, () => {
+            state.upcoming = state.upcoming.filter(x => x.id !== item.id);
+            renderUpcoming();
+          });
+        });
+      });
+    }
+
+    function renderHistory() {
+      $('historyList').innerHTML = state.history.map(h => `
+        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div>
+            <div class="text-xs font-bold text-slate-900">${h.title}</div>
+            <div class="text-[11px] text-slate-500">Ref: ${h.id} &bull; ${h.date}</div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs font-bold text-slate-900">${formatINR(h.amount)}</div>
+            <div class="text-[10px] font-semibold text-emerald-700">${h.status}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderCardsManage() {
+      $('cardsManageList').innerHTML = state.cards.map((c, idx) => `
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-slate-900">${c.bank} •••• ${c.last4}</div>
+            <div class="text-[11px] text-slate-500">${c.label} &bull; Due: ${formatINR(c.due)}</div>
+          </div>
+          <button type="button" data-select-card="${idx}" class="btn-select-card px-3 py-1 rounded-lg bg-white border border-slate-300 text-xs font-semibold text-slate-800">View</button>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.btn-select-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeCardIndex = Number(btn.dataset.selectCard);
+          switchTab('home');
+          renderCards();
+        });
+      });
+    }
+
+    function launchPaymentGate(billerName, amount, onSuccess) {
+      openModal('Secure UPI & 2FA Checkout', `
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="text-xs text-slate-500">Paying to</div>
+          <div class="text-sm font-bold text-slate-900">${billerName}</div>
+          <div class="text-lg font-extrabold text-indigo-900">${formatINR(amount)}</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center gap-2">
+          <i data-lucide="lock" class="w-4 h-4 shrink-0"></i>
+          <span>TLS 1.3 + BBPS Idempotent Tokenization Active. Demo OTP: <strong>${state.demoOtp}</strong></span>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Enter 6-digit OTP to authorize</label>
+          <input id="otpInput" type="text" maxlength="6" placeholder="482910" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-indigo-700" />
+        </div>
+        <button id="btnConfirmPay" type="button" class="w-full py-2.5 rounded-xl bg-[#13197D] text-white text-sm font-bold hover:bg-indigo-900">Authorize &amp; Pay ${formatINR(amount)}</button>
+      `);
+
+      $('btnConfirmPay').addEventListener('click', () => {
+        const val = $('otpInput').value.trim();
+        if (val !== state.demoOtp) {
+          showToast(`Invalid OTP. Use demo code ${state.demoOtp}.`);
+          return;
+        }
+        const refId = 'BBPS' + Math.floor(100000 + Math.random() * 900000);
+        state.history.unshift({
+          id: refId,
+          title: billerName,
+          amount: amount,
+          date: 'Today',
+          status: 'Success'
+        });
+        state.cashBalance += 25;
+        $('topCashVal').textContent = formatINR(state.cashBalance);
+        if (typeof onSuccess === 'function') onSuccess();
+        renderHistory();
+        closeModal();
+        showToast(`Payment successful! Ref: ${refId} (+₹25 NXT Cash)`);
+      });
+    }
+
+    function openUtilitiesModal() {
+      openModal('BBPS Utility & Recharge', `
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" data-cat="Electricity" class="util-cat p-3 rounded-xl border border-indigo-600 bg-indigo-50 text-xs font-bold text-indigo-900">Electricity</button>
+          <button type="button" data-cat="Postpaid" class="util-cat p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700">Postpaid</button>
+          <button type="button" data-cat="Prepaid" class="util-cat p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700">Prepaid 5G</button>
+          <button type="button" data-cat="FASTag" class="util-cat p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700">FASTag</button>
+        </div>
+        <div class="space-y-2 pt-1">
+          <label class="block text-xs font-semibold text-slate-700">Consumer / Mobile / Vehicle Number</label>
+          <input id="utilInput" type="text" value="1094827102" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <label class="block text-xs font-semibold text-slate-700">Amount (INR)</label>
+          <input id="utilAmount" type="number" value="1250" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+        </div>
+        <button id="btnUtilProceed" type="button" class="w-full py-2.5 rounded-xl bg-[#13197D] text-white text-sm font-bold">Fetch &amp; Pay Bill</button>
+      `);
+
+      let selectedCat = 'Electricity';
+      document.querySelectorAll('.util-cat').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedCat = btn.dataset.cat;
+          document.querySelectorAll('.util-cat').forEach(b => {
+            b.className = 'util-cat p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700';
+          });
+          btn.className = 'util-cat p-3 rounded-xl border border-indigo-600 bg-indigo-50 text-xs font-bold text-indigo-900';
+        });
+      });
+
+      $('btnUtilProceed').addEventListener('click', () => {
+        const id = $('utilInput').value.trim();
+        const amt = Number($('utilAmount').value);
+        if (!id || amt <= 0) {
+          showToast('Enter a valid ID and positive amount.');
+          return;
+        }
+        launchPaymentGate(`${selectedCat} (${id})`, amt);
+      });
+    }
+
+    function openSecurityModal() {
+      openModal('Security Firewall & Terms', `
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="font-bold text-slate-900">1. OWASP MASVS &amp; WAF Controls</div>
+            <div class="text-slate-600 mt-0.5">TLS 1.3 + Public Key Pinning, Android Keystore / iOS Keychain token storage, root detection, and Cloudflare/AWS WAF rate limiting.</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="font-bold text-slate-900">2. RBI Data Localization</div>
+            <div class="text-slate-600 mt-0.5">All payment ledger records stored in India (Mumbai/Hyderabad). Zero raw PAN/CVV storage.</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="font-bold text-slate-900">3. Terms &amp; Refund SLA</div>
+            <div class="text-slate-600 mt-0.5">Failed BBPS/UPI transactions auto-reverse in T+1 to T+5 working days. Convenience fees disclosed before OTP.</div>
+          </div>
+        </div>
+      `);
+    }
+
+    function switchTab(tab) {
+      state.activeTab = tab;
+      ['viewHome', 'viewLoan', 'viewCards', 'viewHistory', 'viewSupport'].forEach(id => $(id).classList.add('hidden'));
+      const map = { home: 'viewHome', loan: 'viewLoan', cards: 'viewCards', history: 'viewHistory', support: 'viewSupport' };
+      $(map[tab] || 'viewHome').classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const active = btn.dataset.tab === tab;
+        btn.classList.toggle('text-indigo-900', active);
+        btn.classList.toggle('font-bold', active);
+        btn.classList.toggle('text-slate-500', !active);
+      });
+    }
+
+    // Event bindings
+    $('btnCloseModal').addEventListener('click', closeModal);
+    $('modalOverlay').addEventListener('click', (e) => { if (e.target === $('modalOverlay')) closeModal(); });
+    $('btnSecurityDrawer').addEventListener('click', openSecurityModal);
+    $('btnOpenTermsFromSupport').addEventListener('click', openSecurityModal);
+    $('btnViewAllHistory').addEventListener('click', () => switchTab('history'));
+    $('btnFloatingPayNow').addEventListener('click', openUtilitiesModal);
+
+    $('btnActivateWallet').addEventListener('click', () => {
+      if (state.walletActivated) {
+        showToast('Wallet NXT is already active!');
+        return;
+      }
+      state.walletActivated = true;
+      state.cashBalance += 100;
+      $('topCashVal').textContent = formatINR(state.cashBalance);
+      $('walletCtaText').textContent = 'Wallet NXT Active • ₹100 Bonus Credited ✓';
+      showToast('Closed-loop Wallet NXT activated (+₹100 bonus)!');
+    });
+
+    $('btnTopWallet').addEventListener('click', () => {
+      openModal('NXT Cash Rewards', `
+        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center">
+          <div class="text-xs text-amber-800 font-semibold">Available Closed-Loop Cashback</div>
+          <div class="text-2xl font-extrabold text-amber-900 mt-1">${formatINR(state.cashBalance)}</div>
+        </div>
+        <p class="text-xs text-slate-600">Redeemable directly on electricity, postpaid, prepaid, and FASTag bill payments inside NXT Pay.</p>
+      `);
+    });
+
+    $('btnCardMarketplace').addEventListener('click', () => {
+      openModal('100+ Credit Card Marketplace (DSA)', `
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div><div class="font-bold text-slate-900">Amazon Pay ICICI</div><div class="text-slate-500">Lifetime Free &bull; 5% Prime Cashback</div></div>
+            <button type="button" class="btn-dsa-apply px-3 py-1 rounded-lg bg-indigo-900 text-white font-semibold">Apply</button>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div><div class="font-bold text-slate-900">HDFC Millennia</div><div class="text-slate-500">5% Cashback on Online Spends</div></div>
+            <button type="button" class="btn-dsa-apply px-3 py-1 rounded-lg bg-indigo-900 text-white font-semibold">Apply</button>
+          </div>
+        </div>
+      `);
+      document.querySelectorAll('.btn-dsa-apply').forEach(b => {
+        b.addEventListener('click', () => {
+          closeModal();
+          showToast('Redirecting to partner bank KYC portal (DSA tracked).');
+        });
+      });
+    });
+
+    $('btnApplyCard').addEventListener('click', () => $('btnCardMarketplace').click());
+    $('btnReferEarn').addEventListener('click', () => {
+      openModal('Refer & Earn ₹500 NXT Cash', `
+        <p class="text-xs text-slate-600">Share your referral code with friends. You both earn ₹500 NXT Cash after their first BBPS bill payment.</p>
+        <div class="p-3 rounded-xl bg-slate-100 font-mono text-center font-bold text-indigo-900 tracking-widest">NXTPAY500</div>
+      `);
+    });
+
+    $('btnAddNewCardModal').addEventListener('click', () => {
+      openModal('Link Credit Card', `
+        <div class="space-y-2.5">
+          <input id="newBankName" type="text" placeholder="Bank Name (e.g. Axis Bank)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+          <input id="newLast4" type="text" maxlength="4" placeholder="Last 4 digits (e.g. 5512)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+          <input id="newDueAmt" type="number" placeholder="Current Due (INR)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+          <button id="btnSaveNewCard" type="button" class="w-full py-2.5 rounded-xl bg-[#13197D] text-white text-xs font-bold">Save Card</button>
+        </div>
+      `);
+      $('btnSaveNewCard').addEventListener('click', () => {
+        const bank = ($('newBankName').value.trim() || 'AXIS BANK').toUpperCase();
+        const last4 = $('newLast4').value.trim() || '5512';
+        const due = Number($('newDueAmt').value) || 1200;
+        state.cards.push({
+          id: 'c' + (state.cards.length + 1),
+          bank,
+          last4,
+          label: 'Rewards',
+          network: 'VISA',
+          status: 'Due soon',
+          due,
+          limit: 150000,
+          updated: 'Today',
+          style: 'card-metal'
+        });
+        state.activeCardIndex = state.cards.length - 1;
+        renderCards();
+        renderCardsManage();
+        closeModal();
+        switchTab('home');
+        showToast(`${bank} •••• ${last4} linked!`);
+      });
+    });
+
+    document.querySelectorAll('.grid-action').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const act = btn.dataset.action;
+        if (act === 'utilities') openUtilitiesModal();
+        else if (act === 'gst') showToast('GST Challan payments launching soon!');
+        else if (act === 'wallet') $('btnTopWallet').click();
+        else if (act === 'business' || act === 'invoice') {
+          openModal(act === 'business' ? 'Business Vendor Payment' : 'Pay Vendor Invoice', `
+            <div class="space-y-2.5">
+              <input id="bizName" type="text" placeholder="Vendor / GSTIN Name" value="Sri Balaji Distributors" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+              <input id="bizAmt" type="number" value="4500" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+              <button id="btnBizPay" type="button" class="w-full py-2.5 rounded-xl bg-[#13197D] text-white text-xs font-bold">Pay via UPI / PA</button>
+            </div>
+          `);
+          $('btnBizPay').addEventListener('click', () => {
+            launchPaymentGate($('bizName').value.trim() || 'Vendor Payout', Number($('bizAmt').value) || 4500);
+          });
+        } else if (act === 'seller') {
+          openModal('Seller Hub (Agent Commission)', `
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><div class="text-slate-500">Prepaid Margin</div><div class="font-bold text-slate-900 mt-0.5">0.7% – 4.0%</div></div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><div class="text-slate-500">BBPS Utility Fee</div><div class="font-bold text-slate-900 mt-0.5">₹2 – ₹12 / bill</div></div>
+            </div>
+          `);
+        }
+      });
+    });
+
+    document.querySelectorAll('.nav-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.tab;
+        if (state.activeTab === t) switchTab('home');
+        else switchTab(t);
+      });
+    });
+
+    document.querySelectorAll('.btn-loan-apply').forEach(btn => {
+      btn.addEventListener('click', () => showToast(`Checking eligibility for ${btn.dataset.loan}...`));
+    });
+
+    // Init
+    renderCards();
+    renderUpcoming();
+    renderHistory();
+    renderCardsManage();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+```

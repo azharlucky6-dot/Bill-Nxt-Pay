@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Bill Nxt Pay</string>
+    <string name="top_bar_brand">BILL NXT PAY</string>
+    <string name="cd_security_terms">Security &amp; Terms</string>
+    <string name="cd_nxt_cash_wallet">NXT Cash Rewards Balance</string>
+    <string name="cd_close_modal">Close</string>
+
+    <!-- Home Screen -->
+    <string name="banner_get_card_title">Get your NXT Credit Card</string>
+    <string name="banner_get_card_subtitle">Choose from 100+ card options</string>
+    <string name="action_business_payment">Business\npayment</string>
+    <string name="action_gst">GST</string>
+    <string name="badge_soon_coming">Soon Coming</string>
+    <string name="action_utilities">Utilities</string>
+    <string name="action_pay_invoice">Pay Invoice</string>
+    <string name="action_wallet">Wallet</string>
+    <string name="action_seller_hub">Seller Hub</string>
+    <string name="badge_new">New</string>
+    <string name="cta_activate_wallet">Activate your Wallet NXT →</string>
+    <string name="cta_wallet_active">Wallet NXT Active • ₹100 Bonus Credited ✓</string>
+    <string name="card_refer_title">Refer &amp; Earn</string>
+    <string name="card_refer_subtitle">Earn 500 NXT Cash</string>
+    <string name="card_refer_cta">Share code</string>
+    <string name="card_apply_title">Apply New Card</string>
+    <string name="card_apply_subtitle">100+ Cards &amp; 500 Cash</string>
+    <string name="card_apply_cta">Explore</string>
+    <string name="section_upcoming_payments">Upcoming Payments</string>
+    <string name="action_view_all">View all</string>
+    <string name="upcoming_all_paid">All upcoming bills are settled!</string>
+
+    <!-- Card Carousel -->
+    <string name="label_amount_due">Amount Due</string>
+    <string name="label_available_limit">Available Limit</string>
+    <string name="label_last_updated">Last updated: %1$s</string>
+    <string name="action_pay_bill">Pay Bill</string>
+    <string name="status_paid_check">Paid ✓</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_loan">Loan</string>
+    <string name="nav_cards">Cards</string>
+    <string name="nav_pay_now">Pay now</string>
+    <string name="nav_history">History</string>
+    <string name="nav_support">Support</string>
+
+    <!-- Secondary Tabs -->
+    <string name="loan_screen_title">Instant Credit &amp; Business Loans</string>
+    <string name="loan_screen_desc">Pre-approved partner offers via RBI-registered NBFCs. Zero impact on credit score for eligibility check.</string>
+    <string name="loan_personal_title">Personal Flexi Loan</string>
+    <string name="loan_personal_sub">Up to ₹5,00,000 • 11.9% p.a.</string>
+    <string name="loan_merchant_title">Merchant Working Capital</string>
+    <string name="loan_merchant_sub">Up to ₹15,00,000 • Daily/Weekly EMI</string>
+    <string name="action_check_eligibility">Check</string>
+
+    <string name="cards_screen_title">Linked Credit Cards</string>
+    <string name="action_link_card">+ Link Card</string>
+    <string name="action_view_card">View</string>
+
+    <string name="history_screen_title">Transaction Ledger (BBPS)</string>
+    <string name="history_empty">No BBPS transactions yet.</string>
+
+    <string name="support_screen_title">Help, Security &amp; Grievance</string>
+    <string name="support_reversal_info">Failed BBPS or UPI payments are auto-reversed within T+1 to T+5 working days.</string>
+    <string name="support_grievance_title">Grievance Officer (RBI / IT Rules)</string>
+    <string name="support_grievance_email">Email: grievance@nxtpay-demo.in</string>
+    <string name="support_grievance_sla">SLA: 24h acknowledgement • 30-day resolution</string>
+    <string name="support_read_terms">Read Terms &amp; Security Policy</string>
+
+    <!-- Modals -->
+    <string name="modal_payment_title">Secure UPI &amp; 2FA Checkout</string>
+    <string name="modal_utilities_title">BBPS Utility &amp; Recharge</string>
+    <string name="modal_security_title">Security Firewall &amp; Terms</string>
+    <string name="modal_wallet_title">NXT Cash Rewards</string>
+    <string name="modal_marketplace_title">100+ Credit Card Marketplace (DSA)</string>
+    <string name="modal_refer_title">Refer &amp; Earn ₹500 NXT Cash</string>
+    <string name="modal_link_card_title">Link Credit Card</string>
+    <string name="modal_business_title">Business Vendor Payment</string>
+    <string name="modal_invoice_title">Pay Vendor Invoice</string>
+    <string name="modal_seller_title">Seller Hub (Agent Commission)</string>
+</resources>
